@@ -24,6 +24,7 @@ public class CameraController : MonoBehaviour {
 
         float move = Input.GetAxis("Horizontal");
 
+        //flip camera
         if (move > 0 && facingRight)
             facingRight = !facingRight;
         else if (move < 0 && !facingRight)
