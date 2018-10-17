@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         currentStateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
         currentState = currentStateInfo.fullPathHash;
-
+        /*
         if (currentState == idleState)
         {
             Debug.Log("Idle State");
@@ -92,6 +92,9 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Block State");
         }
+
+
+        */
 
         //-Control Speed Based on Commands --------------------------------------------------
         if (currentState == idleState || currentState == runState)
@@ -141,7 +144,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetBool("Attack", true);
+
+ 
         }
+
         else
         {
             anim.SetBool("Attack", false);
@@ -185,6 +191,8 @@ public class Player : MonoBehaviour
 
         thisScale.x *= -1;
         transform.localScale = thisScale;
+
+    
     }
 
 
