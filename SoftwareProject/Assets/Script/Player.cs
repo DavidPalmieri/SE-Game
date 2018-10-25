@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int fcount = 30;
+    private float gLevel = (float)0.0;
+    private bool grounded = true;
 
-    private float jumpForce = 400f;
+    private float jumpForce = Physics.gravity.magnitude/2;
 
     private float walkMovementSpeed = 10f;
     private float attackMovementSpeed = 1f;
 
     // Wont walk of screen
-    private float xMin = -50f, xMax = 50f, zMin = -8f, zMax = 8f;
+    private float xMin = -30f, xMax = 30f, zMin = -5f, zMax = 5f;
     private float movementSpeed;
 
     //the characters body
@@ -110,10 +113,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        fcount++;
 
         // ----Movement -------------------------------------------------------------------------------------------
 
-
+        grounded = rigidBody.transform.localPosition.y < gLevel;
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
@@ -135,22 +139,31 @@ public class Player : MonoBehaviour
             Flip();
         }
 
-        anim.SetFloat("Speed", rigidBody.velocity.x + rigidBody.velocity.z);
+        anim.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x + rigidBody.velocity.z));
 
 
         // - Combo Attacks ----------------------------------------------
 
         //Attack1
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            anim.SetBool("Attack", true);
-
- 
+            if (fcount > 48 || fcount < 6)
+            {
+                anim.SetBool("Attack", true);
+                fcount = 0;
+                anim.SetBool("Attack2", false);
+            }
+            else
+            {
+                anim.SetBool("Attack2", true);
+                anim.SetBool("Attack", false);
+            }
         }
 
         else
         {
             anim.SetBool("Attack", false);
+            anim.SetBool("Attack2", false);
         }
 
 
@@ -162,6 +175,7 @@ public class Player : MonoBehaviour
         {
             attack1Box.gameObject.SetActive(false);
         }
+
         if (attack2SpriteHitFrame == currentSprite.sprite)
         {
             attack2Box.gameObject.SetActive(true);
@@ -171,9 +185,15 @@ public class Player : MonoBehaviour
             attack2Box.gameObject.SetActive(false);
         }
 
-        // - Block ------------------------------------------------------
+        // - Jump ------------------------------------------------------
 
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.RightShift)&&grounded)
+        {
+            anim.SetBool("Jump", true);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 10, rigidBody.velocity.z);
+        }
+
+        if (Input.GetKey(KeyCode.RightShift))
         {
             anim.SetBool("Jump", true);
             rigidBody.AddForce(Vector3.up * jumpForce);
