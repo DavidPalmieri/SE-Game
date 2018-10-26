@@ -148,12 +148,9 @@ public class Player : MonoBehaviour
  
         }
 
-
-
         else
         {
             anim.SetBool("Attack", false);
-            
         }
 
 
