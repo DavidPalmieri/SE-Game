@@ -6,15 +6,17 @@ public class CameraController : MonoBehaviour {
 
     public GameObject Char;       //Public variable to store a reference to the Char game object
 
-    public bool facingRight = true;
+    public int facingRight = 1;
 
     private Vector3 offset;         //Private variable to store the offset distance between the Char and camera
+    private Vector3 nOffset;
 
     // Use this for initialization
     void Start()
     {
         //Calculate and store the offset value by getting the distance between the Char's position and camera's position.
         offset = transform.position - Char.transform.position;
+        nOffset = new Vector3(0, offset.y, offset.z);
     }
 
     // LateUpdate is called after Update each frame
@@ -25,15 +27,20 @@ public class CameraController : MonoBehaviour {
         float move = Input.GetAxis("Horizontal");
 
         //flip camera
-        if (move > 0 && facingRight)
-            facingRight = !facingRight;
-        else if (move < 0 && !facingRight)
-            facingRight = !facingRight;
+        if (move == 0)
+            facingRight = 0;
+        else if (move > 0 && facingRight>-1)
+            facingRight = -1;
+        else if (move < 0 && facingRight<1)
+            facingRight = 1;
 
-        if (!facingRight)
-            transform.position = Char.transform.position + offset;
-        else
+        if (facingRight == 0)
+            transform.position = Char.transform.position + nOffset;
+        else if (facingRight == 1)
             transform.position = new Vector3(Char.transform.position.x - offset.x, Char.transform.position.y + offset.y, Char.transform.position.z + offset.z);
+        else if (facingRight == -1)
+            transform.position = Char.transform.position + offset;
+
 
     }
 }
