@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDamage : MonoBehaviour {
 
+public class EnemyHealthManager : MonoBehaviour {
     public int MaxHealth = 20;
     public int CurrentHealth;
+    private int fcount = 0;
 
     // initiation of health
     private void Start(){
@@ -16,21 +17,16 @@ public class EnemyDamage : MonoBehaviour {
         if(CurrentHealth <= 0) {
             Destroy(gameObject);
         }
+        
+        fcount++;
     }
-    public void SetMaxHealth()
+    private void Hit(int d)
     {
-        CurrentHealth = MaxHealth;
-    }
-    //dammage with the hit boxes
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Attack 1 Box")
+        if (fcount > 5)
         {
-            CurrentHealth -= 5;
-        }
-        else if (other.gameObject.name == "Attack 2 Box")
-        {
-            CurrentHealth -= 10;
+            CurrentHealth -= d;
+            Debug.Log(CurrentHealth + " " + fcount);
+            fcount = 0;
         }
     }
 }

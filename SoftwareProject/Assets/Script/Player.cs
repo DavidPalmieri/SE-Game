@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class Player : MonoBehaviour
     //Animator State Info
     AnimatorStateInfo currentStateInfo;
 
-    public GameObject attack1Box, attack2Box;
+    public Collider attack1Box, attack2Box;
     public Sprite attack1SpriteHitFrame, attack2SpriteHitFrame;
 
     SpriteRenderer currentSprite;
@@ -144,7 +145,7 @@ public class Player : MonoBehaviour
 
         // - Combo Attacks ----------------------------------------------
 
-        //Attack1
+        //Attack1 and Attack2
         if (Input.GetKey(KeyCode.Space))
         {
             if (fcount > 48 || fcount < 6)
@@ -169,20 +170,12 @@ public class Player : MonoBehaviour
 
         if (attack1SpriteHitFrame == currentSprite.sprite)
         {
-            attack1Box.gameObject.SetActive(true);
-        }
-        else
-        {
-            attack1Box.gameObject.SetActive(false);
+            Attack(attack1Box, 5);
         }
 
         if (attack2SpriteHitFrame == currentSprite.sprite)
         {
-            attack2Box.gameObject.SetActive(true);
-        }
-        else
-        {
-            attack2Box.gameObject.SetActive(false);
+            Attack(attack2Box, 10);
         }
 
         // - Jump ------------------------------------------------------
@@ -204,6 +197,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Attack(Collider aBox, int v)
+    {
+        Collider[] hit = Physics.OverlapBox(aBox.bounds.center, aBox.bounds.extents, aBox.transform.rotation, LayerMask.GetMask("eHit"));
+        foreach (Collider h in hit)
+        {
+            h.SendMessageUpwards("Hit", v);
+        }
+    }
+
     void Flip()
     {
         facingRight = !facingRight;
@@ -211,12 +213,5 @@ public class Player : MonoBehaviour
 
         thisScale.x *= -1;
         transform.localScale = thisScale;
-
-    
     }
-
-
-
-
-
 }
