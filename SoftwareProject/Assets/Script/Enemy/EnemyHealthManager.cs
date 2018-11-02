@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour {
 
-    public int MaxHealth;
+    public int MaxHealth = 20;
     public int CurrentHealth;
 
     // initiation of health
@@ -17,11 +17,20 @@ public class EnemyDamage : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-    public void HurtEnemy (int damageDelt){
-        CurrentHealth -= damageDelt;
-    }
     public void SetMaxHealth()
     {
         CurrentHealth = MaxHealth;
+    }
+    //dammage with the hit boxes
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Attack 1 Box")
+        {
+            CurrentHealth -= 5;
+        }
+        else if (other.gameObject.name == "Attack 2 Box")
+        {
+            CurrentHealth -= 10;
+        }
     }
 }
