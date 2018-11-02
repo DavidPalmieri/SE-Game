@@ -22,8 +22,9 @@ public class EnemyDamage : MonoBehaviour {
         CurrentHealth = MaxHealth;
     }
     //dammage with the hit boxes
-    void OnTriggerEnter2D(Collider2D other)
-    {
+
+    void OnTriggerEnter2D(Collider other){
+
         if (other.gameObject.name == "Attack 1 Box")
         {
             CurrentHealth -= 5;
