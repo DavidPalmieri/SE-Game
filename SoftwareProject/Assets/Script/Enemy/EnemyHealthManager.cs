@@ -14,6 +14,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         CurrentHealth = MaxHealth;
     }
+
     //update called once per frame
     private void Update()
     {
@@ -30,9 +31,8 @@ public class EnemyHealthManager : MonoBehaviour
     {
         if (fcount > 5) {
             fcount = 0;
-            CurrentHealth -= d; }
+            CurrentHealth -= d;
+        }
         Debug.Log(CurrentHealth);
     }
-    //dammage with the hit boxes
-
 }
