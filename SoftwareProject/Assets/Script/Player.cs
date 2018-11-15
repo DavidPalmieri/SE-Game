@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -190,6 +191,15 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("Jump", true);
             rigidBody.AddForce(Vector3.up * jumpForce);
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+            SceneManager.LoadScene(0);
         }
         else
         {
