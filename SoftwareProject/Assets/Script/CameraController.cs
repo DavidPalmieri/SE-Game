@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
-
+public class CameraController : MonoBehaviour
+{
     public GameObject Char;       //Public variable to store a reference to the Char game object
 
     public int facingRight = 1;
@@ -23,15 +23,14 @@ public class CameraController : MonoBehaviour {
     void LateUpdate()
     {
         // Set the position of the camera's transform to be the same as the Char's, but offset by the calculated offset distance.
-
         float move = Input.GetAxis("Horizontal");
 
         //flip camera
         if (move == 0)
             facingRight = 0;
-        else if (move > 0 && facingRight>-1)
+        else if (move > 0 && facingRight > -1)
             facingRight = -1;
-        else if (move < 0 && facingRight<1)
+        else if (move < 0 && facingRight < 1)
             facingRight = 1;
 
         if (facingRight == 0)
@@ -40,7 +39,5 @@ public class CameraController : MonoBehaviour {
             transform.position = new Vector3(Char.transform.position.x - offset.x, Char.transform.position.y + offset.y, Char.transform.position.z + offset.z);
         else if (facingRight == -1)
             transform.position = Char.transform.position + offset;
-
-
     }
 }

@@ -29,7 +29,8 @@ public class EnemyHealthManager : MonoBehaviour
     //dammage with the hit boxes
     private void Hit(int d)
     {
-        if (fcount > 5) {
+        if (fcount > 5)
+        {
             fcount = 0;
             CurrentHealth -= d;
         }

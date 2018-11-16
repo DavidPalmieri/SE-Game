@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public int fcount = 30;
+    public int fCount = 30;
     private float gLevel = (float)0.0;
     private bool grounded = true;
 
@@ -54,13 +54,6 @@ public class Player : MonoBehaviour
     //fall
     static int fallState = Animator.StringToHash("Base Layer.Fall");
 
-
-
-
-
-
-
-
     private void Start()
     {
         currentSprite = GetComponent<SpriteRenderer>();
@@ -97,8 +90,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Block State");
         }
-
-
         */
 
         //-Control Speed Based on Commands --------------------------------------------------
@@ -110,12 +101,11 @@ public class Player : MonoBehaviour
         {
             movementSpeed = attackMovementSpeed;
         }
-
     }
 
     private void FixedUpdate()
     {
-        fcount++;
+        fCount++;
 
         // ----Movement -------------------------------------------------------------------------------------------
 
@@ -128,8 +118,6 @@ public class Player : MonoBehaviour
         rigidBody.velocity = movement;
 
         rigidBody.position = new Vector3(Mathf.Clamp(rigidBody.position.x, xMin, xMax), transform.position.y, Mathf.Clamp(rigidBody.position.z, zMin, zMax));
-
-
 
         if (moveHorizontal > 0 && !facingRight)
         {
@@ -146,12 +134,12 @@ public class Player : MonoBehaviour
         // - Combo Attacks ----------------------------------------------
 
         //Attack1 and Attack2
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.E))
         {
-            if (fcount > 48 || fcount < 6)
+            if (fCount > 48 || fCount < 6)
             {
                 anim.SetBool("Attack", true);
-                fcount = 0;
+                fCount = 0;
                 anim.SetBool("Attack2", false);
             }
             else
@@ -167,7 +155,6 @@ public class Player : MonoBehaviour
             anim.SetBool("Attack2", false);
         }
 
-
         if (attack1SpriteHitFrame == currentSprite.sprite)
         {
             Attack(attack1Box, 5);
@@ -180,18 +167,21 @@ public class Player : MonoBehaviour
 
         // - Jump ------------------------------------------------------
 
-        if (Input.GetKeyDown(KeyCode.RightShift)&&grounded)
+        if (Input.GetKeyDown(KeyCode.Space)&&grounded)
         {
             anim.SetBool("Jump", true);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 10, rigidBody.velocity.z);
         }
 
-        if (Input.GetKey(KeyCode.RightShift))
+        if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y>0)
         {
             anim.SetBool("Jump", true);
             rigidBody.AddForce(Vector3.up * jumpForce);
         }
-        if (Input.GetKey(KeyCode.Q))
+
+        // - Quit ------------------------------------------------------
+
+        if (Input.GetKey(KeyCode.Escape))
         {
             #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -206,12 +196,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack(Collider aBox, int v)
+    private void Attack(Collider aBox, int damage)
     {
         Collider[] hit = Physics.OverlapBox(aBox.bounds.center, aBox.bounds.extents, aBox.transform.rotation, LayerMask.GetMask("eHit"));
-        foreach (Collider h in hit)
+        foreach (Collider col in hit)
         {
-            h.SendMessageUpwards("Hit", v);
+            col.SendMessageUpwards("Hit", damage);
         }
     }
 
@@ -259,5 +249,4 @@ public class Player : MonoBehaviour
             Debug.Log(CurrentHealth);
         }
     }
-
 }
