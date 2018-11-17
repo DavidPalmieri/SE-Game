@@ -58,17 +58,8 @@ public class EnemySight : MonoBehaviour {
         }
 
         targetDistance = Vector3.Distance(target.transform.position, gameObject.transform.position);
-
-
     }
-
-
-
-
-
-
-
-
+    
     private void OnTriggerStay(Collider other)
     {
         
@@ -76,8 +67,6 @@ public class EnemySight : MonoBehaviour {
         {
             playerInSight = true;
         }
-
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -87,9 +76,5 @@ public class EnemySight : MonoBehaviour {
         {
             playerInSight = false;
         }
-
-
     }
-
-
 }

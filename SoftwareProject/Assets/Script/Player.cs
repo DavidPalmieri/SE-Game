@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public int fcount = 30;
+    public int fCount = 30;
     private float gLevel = (float)0.0;
     private bool grounded = true;
 
@@ -29,7 +31,7 @@ public class Player : MonoBehaviour
     //Animator State Info
     AnimatorStateInfo currentStateInfo;
 
-    public GameObject attack1Box, attack2Box;
+    public Collider attack1Box, attack2Box;
     public Sprite attack1SpriteHitFrame, attack2SpriteHitFrame;
 
     SpriteRenderer currentSprite;
@@ -51,13 +53,6 @@ public class Player : MonoBehaviour
     static int hurtState = Animator.StringToHash("Base Layer.Hurt");
     //fall
     static int fallState = Animator.StringToHash("Base Layer.Fall");
-
-
-
-
-
-
-
 
     private void Start()
     {
@@ -95,8 +90,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Block State");
         }
-
-
         */
 
         //-Control Speed Based on Commands --------------------------------------------------
@@ -108,12 +101,11 @@ public class Player : MonoBehaviour
         {
             movementSpeed = attackMovementSpeed;
         }
-
     }
 
     private void FixedUpdate()
     {
-        fcount++;
+        fCount++;
 
         // ----Movement -------------------------------------------------------------------------------------------
 
@@ -127,8 +119,6 @@ public class Player : MonoBehaviour
 
         rigidBody.position = new Vector3(Mathf.Clamp(rigidBody.position.x, xMin, xMax), transform.position.y, Mathf.Clamp(rigidBody.position.z, zMin, zMax));
 
-
-
         if (moveHorizontal > 0 && !facingRight)
         {
             Flip();
@@ -141,16 +131,15 @@ public class Player : MonoBehaviour
 
         anim.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x + rigidBody.velocity.z));
 
-
         // - Combo Attacks ----------------------------------------------
 
-        //Attack1
-        if (Input.GetKey(KeyCode.Space))
+        //Attack1 and Attack2
+        if (Input.GetKey(KeyCode.E))
         {
-            if (fcount > 48 || fcount < 6)
+            if (fCount > 48 || fCount < 6)
             {
                 anim.SetBool("Attack", true);
-                fcount = 0;
+                fCount = 0;
                 anim.SetBool("Attack2", false);
             }
             else
@@ -166,41 +155,53 @@ public class Player : MonoBehaviour
             anim.SetBool("Attack2", false);
         }
 
-
         if (attack1SpriteHitFrame == currentSprite.sprite)
         {
-            attack1Box.gameObject.SetActive(true);
-        }
-        else
-        {
-            attack1Box.gameObject.SetActive(false);
+            Attack(attack1Box, 5);
         }
 
         if (attack2SpriteHitFrame == currentSprite.sprite)
         {
-            attack2Box.gameObject.SetActive(true);
-        }
-        else
-        {
-            attack2Box.gameObject.SetActive(false);
+            Attack(attack2Box, 10);
         }
 
         // - Jump ------------------------------------------------------
 
-        if (Input.GetKeyDown(KeyCode.RightShift)&&grounded)
+        if (Input.GetKeyDown(KeyCode.Space)&&grounded)
         {
             anim.SetBool("Jump", true);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 10, rigidBody.velocity.z);
         }
 
-        if (Input.GetKey(KeyCode.RightShift))
+        if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y>0)
         {
             anim.SetBool("Jump", true);
             rigidBody.AddForce(Vector3.up * jumpForce);
         }
+
+        // - Quit ------------------------------------------------------
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+            SceneManager.LoadScene(0);
+        }
         else
         {
             anim.SetBool("Jump", false);
+        }
+    }
+
+    private void Attack(Collider aBox, int damage)
+    {
+        Collider[] hit = Physics.OverlapBox(aBox.bounds.center, aBox.bounds.extents, aBox.transform.rotation, LayerMask.GetMask("eHit"));
+        foreach (Collider col in hit)
+        {
+            col.SendMessageUpwards("Hit", damage);
         }
     }
 
@@ -211,12 +212,41 @@ public class Player : MonoBehaviour
 
         thisScale.x *= -1;
         transform.localScale = thisScale;
-
-    
     }
+    // - Health methods ---------------------------------------------
 
+    public class PlayerHealthManager : MonoBehaviour
+    {
+        public int MaxHealth = 100;
+        public int CurrentHealth;
+        private int fcount = 0;
 
+        // initiation of health
+        private void Start()
+        {
+            CurrentHealth = MaxHealth;
+        }
 
+        //update called once per frame
+        private void Update()
+        {
+            if (CurrentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
 
+            fcount++;
+        }
 
+        //dammage with the hit boxes
+        private void Hit(int d)
+        {
+            if (fcount > 5)
+            {
+                fcount = 0;
+                CurrentHealth -= d;
+            }
+            Debug.Log(CurrentHealth);
+        }
+    }
 }
