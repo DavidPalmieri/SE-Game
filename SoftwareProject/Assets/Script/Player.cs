@@ -183,11 +183,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+          
             SceneManager.LoadScene(0);
         }
         else
