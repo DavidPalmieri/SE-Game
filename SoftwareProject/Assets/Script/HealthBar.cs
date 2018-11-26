@@ -8,16 +8,13 @@ public class HealthBar : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
-        Transform bar = transform.Find("HealthBar");
+        Transform bar = transform.Find("Bar");
 	}
 	
     //controls the health size
 	public void SetSize(float sizeNormalized) {
         bar.localScale = new Vector3(sizeNormalized, 1f);
     }
-	// here sets the health bars color.
-    public void SetColor(Color color){
-        bar.Find("Bar").GetComponent<SpriteRenderer>().color = color;
-    }
+		
     }
 
