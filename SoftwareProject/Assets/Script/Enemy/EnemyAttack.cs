@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class EnemyAttack : MonoBehaviour {
+public class EnemyAttack : MonoBehaviour
+{
 
 
     public float attackRange;
@@ -12,13 +13,14 @@ public class EnemyAttack : MonoBehaviour {
 
     public GameObject spriteObject;
 
-    public GameObject attack1Box, attack2Box;
+    public Collider attack1Box, attack2Box;
     public Sprite attack1SpriteHitFrame, attack2SpriteHitFrame;
     public Sprite currentSprite;
     NavMeshAgent navMeshAgent;
     EnemySight enemySight;
     EnemyWalk enemyWalk;
     Animator animator;
+    public int fCount;
 
     private void Awake()
     {
@@ -26,42 +28,48 @@ public class EnemyAttack : MonoBehaviour {
         enemySight = GetComponent<EnemySight>();
         enemyWalk = GetComponent<EnemyWalk>();
         animator = spriteObject.GetComponent<Animator>();
-            
+
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
+        fCount = 0;
+    }
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
 
         currentSprite = spriteObject.GetComponent<SpriteRenderer>().sprite;
 
-        if (enemySight.playerInSight == true && enemySight.targetDistance < attackRange)
+        if (enemySight.playerInSight == true && enemySight.targetDistance < attackRange && ++fCount > 60)
         {
 
             animator.SetBool("Attack", true);
 
             if (attack1SpriteHitFrame == currentSprite)
             {
-                attack1Box.gameObject.SetActive(true);
+                fCount = 0;
+                Attack(attack1Box, 1);
             }
             else if (attack2SpriteHitFrame == currentSprite)
             {
-                attack2Box.gameObject.SetActive(true);
-            }
-            else
-            {
-                attack1Box.gameObject.SetActive(false);
-                attack2Box.gameObject.SetActive(false);
+                Attack(attack2Box, 2);
             }
         }
+        else
+        {
+            animator.SetBool("Attack", false);
+        }
+    }
 
-
-
-
-
+    private void Attack(Collider aBox, int damage)
+    {
+        Collider[] hit = Physics.OverlapBox(aBox.bounds.center, aBox.bounds.extents, aBox.transform.rotation, LayerMask.GetMask("pHit"));
+        foreach (Collider col in hit)
+        {
+            col.SendMessageUpwards("Hit", damage);
+        }
     }
 }

@@ -41,6 +41,10 @@ public class EnemyWalk : MonoBehaviour
                 animator.SetBool("Walk", false);
             }
         }
+        else
+        {
+            animator.SetBool("Walk", false);
+        }
 
         if (enemySight.playerOnRight == true && !facingRight)
         {
