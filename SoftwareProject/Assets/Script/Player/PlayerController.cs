@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private float gLevel = (float)-.3;
     private bool grounded = true;
 
-    private float jumpForce = Physics.gravity.magnitude/2;
+    private float jumpForce = Physics.gravity.magnitude / 2;
 
     private float walkMovementSpeed = 10f;
     private float attackMovementSpeed = 1f;
@@ -167,13 +167,13 @@ public class PlayerController : MonoBehaviour
 
         // - Jump ------------------------------------------------------
 
-        if (Input.GetKeyDown(KeyCode.Space)&&grounded)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             anim.SetBool("Jump", true);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 10, rigidBody.velocity.z);
         }
 
-        if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y>0)
+        if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y > 0)
         {
             anim.SetBool("Jump", true);
             rigidBody.AddForce(Vector3.up * jumpForce);
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
-          
+
             SceneManager.LoadScene(0);
         }
         else

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySight : MonoBehaviour {
+public class EnemySight : MonoBehaviour
+{
 
     public bool playerInSight;
 
@@ -21,8 +22,9 @@ public class EnemySight : MonoBehaviour {
     public float frontTargetDistance;
     public float backTargetDistance;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake()
+    {
 
         player = GameObject.FindGameObjectWithTag("Player");
         frontTarget = GameObject.Find("Enemy Front Target");
@@ -31,15 +33,16 @@ public class EnemySight : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         //target = player;
 
         playerRelativePosition = player.transform.position - gameObject.transform.position;
-        if(playerRelativePosition.x < 0)
+        if (playerRelativePosition.x < 0)
         {
             playerOnRight = false;
         }
-        else if(playerRelativePosition.x > 0)
+        else if (playerRelativePosition.x > 0)
         {
             playerOnRight = true;
         }
@@ -48,22 +51,22 @@ public class EnemySight : MonoBehaviour {
         backTargetDistance = Vector3.Distance(backTarget.transform.position, gameObject.transform.position);
 
 
-        if(frontTargetDistance < backTargetDistance)
+        if (frontTargetDistance < backTargetDistance)
         {
             target = frontTarget;
         }
-        else if(frontTargetDistance > backTargetDistance)
+        else if (frontTargetDistance > backTargetDistance)
         {
             target = backTarget;
         }
 
         targetDistance = Vector3.Distance(target.transform.position, gameObject.transform.position);
     }
-    
+
     private void OnTriggerStay(Collider other)
     {
-        
-        if(other.gameObject == player)
+
+        if (other.gameObject == player)
         {
             playerInSight = true;
         }
@@ -71,8 +74,8 @@ public class EnemySight : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        
-        if(other.gameObject == player)
+
+        if (other.gameObject == player)
         {
             playerInSight = false;
         }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
-public class TestingHandler : MonoBehaviour {
+public class TestingHandler : MonoBehaviour
+{
 
     [SerializeField] private HealthBar healthBar;
     //this testing script will ensure the health bar can reduce if damage is taken
@@ -17,7 +18,8 @@ public class TestingHandler : MonoBehaviour {
                 health -= .01f;
                 healthBar.SetSize(health);
             }
-            if (health < -.3f) {
+            if (health < -.3f)
+            {
                 // flashing if under 30% health
                 if ((health * 100f) % 3 == 0)
                 {
@@ -27,7 +29,7 @@ public class TestingHandler : MonoBehaviour {
                 {
                     healthBar.SetColor(Color.red);
                 }
-                
+
             }
         }, 0.03f);
     }

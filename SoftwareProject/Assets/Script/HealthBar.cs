@@ -2,27 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBar : MonoBehaviour {
+public class HealthBar : MonoBehaviour
+{
 
     private Transform bar;
 
 
     // Use this for initialization
-	void Start () {
+    void Start()
+    {
         Transform bar = transform.Find("HealthBar");
-	}
+    }
 
     public void Update()
     {
-        
+
     }
 
     //controls the health size
-    public void SetSize(float sizeNormalized) {
+    public void SetSize(float sizeNormalized)
+    {
         bar.localScale = new Vector3(sizeNormalized, 1f);
     }
-	// here sets the health bars color.
-    public void SetColor(Color color){
+    // here sets the health bars color.
+    public void SetColor(Color color)
+    {
         bar.Find("Bar").GetComponent<SpriteRenderer>().color = color;
     }
 }
