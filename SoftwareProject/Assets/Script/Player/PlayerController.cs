@@ -42,17 +42,17 @@ public class PlayerController : MonoBehaviour
     static int idleState = Animator.StringToHash("Base Layer.Idle");
     static int runState = Animator.StringToHash("Base Layer.Run");
 
-    static int attack1State = Animator.StringToHash("Base Layer.Attack1");
-    static int heavySlashState = Animator.StringToHash("Base Layer.HeavySlash");
+    //static int attack1State = Animator.StringToHash("Base Layer.Attack1");
+    //static int heavySlashState = Animator.StringToHash("Base Layer.HeavySlash");
 
-    //jump
-    static int jumpState = Animator.StringToHash("Base Layer.Jump");
-    //block
-    static int blockState = Animator.StringToHash("Base Layer.Block");
-    //hurt
-    static int hurtState = Animator.StringToHash("Base Layer.Hurt");
-    //fall
-    static int fallState = Animator.StringToHash("Base Layer.Fall");
+    ////jump
+    //static int jumpState = Animator.StringToHash("Base Layer.Jump");
+    ////block
+    //static int blockState = Animator.StringToHash("Base Layer.Block");
+    ////hurt
+    //static int hurtState = Animator.StringToHash("Base Layer.Hurt");
+    ////fall
+    //static int fallState = Animator.StringToHash("Base Layer.Fall");
 
     private void Start()
     {
@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
         */
 
         //-Control Speed Based on Commands --------------------------------------------------
+
         if (currentState == idleState || currentState == runState)
         {
             movementSpeed = walkMovementSpeed;
@@ -183,12 +184,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
-
             SceneManager.LoadScene(0);
-        }
-        else
-        {
-            anim.SetBool("Jump", false);
         }
     }
 
@@ -208,41 +204,5 @@ public class PlayerController : MonoBehaviour
 
         thisScale.x *= -1;
         transform.localScale = thisScale;
-    }
-    // - Health methods ---------------------------------------------
-
-    public class PlayerHealthManager : MonoBehaviour
-    {
-        public int MaxHealth = 100;
-        public int CurrentHealth;
-        private int fcount = 0;
-
-        // initiation of health
-        private void Start()
-        {
-            CurrentHealth = MaxHealth;
-        }
-
-        //update called once per frame
-        private void Update()
-        {
-            if (CurrentHealth <= 0)
-            {
-                Destroy(gameObject);
-            }
-
-            fcount++;
-        }
-
-        //dammage with the hit boxes
-        private void Hit(int d)
-        {
-            if (fcount > 5)
-            {
-                fcount = 0;
-                CurrentHealth -= d;
-            }
-            Debug.Log(CurrentHealth);
-        }
-    }
+    } 
 }

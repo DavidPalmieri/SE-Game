@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // - Health methods ---------------------------------------------
 public class PlayerHealthManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class PlayerHealthManager : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
+            SceneManager.LoadScene(0);
         }
 
         fcount++;
@@ -35,5 +37,7 @@ public class PlayerHealthManager : MonoBehaviour
             CurrentHealth -= d;
         }
         Debug.Log(CurrentHealth);
+
+        gameObject.GetComponentInChildren<HealthBarController>().SetSize((float)CurrentHealth / (float)MaxHealth);
     }
 }

@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spawn : MonoBehaviour
 {
     public GameObject enemy1;                // The enemy prefab to be spawned.
     public GameObject enemy2;
     public GameObject player;
+    public GameObject VictoryText;
     private List<SpawnPionts> SPs = new List<SpawnPionts>();
-    private int fcount;
+    private long fCount;
+    private long score;
     private float playerPos;
     private float trigger;
+    private bool won;
+
 
     void Start()
     {
@@ -23,11 +28,12 @@ public class Spawn : MonoBehaviour
         SPs.Add(new SpawnPionts(60, 4, enemy1));
         SPs.Add(new SpawnPionts(90, 5, enemy1));
 
-        fcount = 0;
+        fCount = 0;
+        won = false;
     }
     void Update()
     {
-        if (++fcount > 6)
+        if ((++fCount) % 4 == 0)
         {
             playerPos = player.GetComponent<Rigidbody>().transform.position.x;
 
@@ -41,11 +47,18 @@ public class Spawn : MonoBehaviour
                     SP.SpawnEnemy();
                 }
             }
-        }
-        else if (fcount > 12)
-        {
-            fcount = 0;
-        }
 
+            if (playerPos > 110 && !won)
+            {
+                score = fCount;
+                won = true;
+                VictoryText.SetActive(true);
+            }
+
+            if (won && score + 300 < fCount)
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
     }
 }

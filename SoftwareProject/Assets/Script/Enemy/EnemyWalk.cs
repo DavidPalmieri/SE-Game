@@ -35,11 +35,6 @@ public class EnemyWalk : MonoBehaviour
             navMeshAgent.SetDestination(enemySight.target.transform.position);
             navMeshAgent.updateRotation = false;
             animator.SetBool("Walk", true);
-
-            if (enemySight.targetDistance < .1f)
-            {
-                animator.SetBool("Walk", false);
-            }
         }
         else
         {

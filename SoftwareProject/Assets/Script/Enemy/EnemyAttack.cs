@@ -51,11 +51,11 @@ public class EnemyAttack : MonoBehaviour
             if (attack1SpriteHitFrame == currentSprite)
             {
                 fCount = 0;
-                Attack(attack1Box, 1);
+                Attack(attack1Box, 5);
             }
             else if (attack2SpriteHitFrame == currentSprite)
             {
-                Attack(attack2Box, 2);
+                Attack(attack2Box, 1);
             }
         }
         else
