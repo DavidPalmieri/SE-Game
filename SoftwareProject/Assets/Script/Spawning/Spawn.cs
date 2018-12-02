@@ -10,9 +10,13 @@ public class Spawn : MonoBehaviour
     private Vector3 SP;
 
     void Start()
-    { SP = enemy.transform.position; }
+    {
+        
+    }
     void Update()
     {
+        SP = new Vector3(player.transform.position.x + 7, player.transform.position.y, player.transform.position.z);
+
         if (Input.GetKeyDown(KeyCode.P))
             Instantiate(enemy, SP, enemy.transform.rotation);
     }

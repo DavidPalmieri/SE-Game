@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public int fCount = 30;
-    private float gLevel = (float)0.0;
+    private float gLevel = (float)-.3;
     private bool grounded = true;
 
     private float jumpForce = Physics.gravity.magnitude/2;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private float attackMovementSpeed = 1f;
 
     // Wont walk of screen
-    private float xMin = -30f, xMax = 30f, zMin = -5f, zMax = 5f;
+    private float xMin = -120f, xMax = 120f, zMin = -5f, zMax = 5f;
     private float movementSpeed;
 
     //the characters body
