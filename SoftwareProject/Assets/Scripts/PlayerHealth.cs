@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth: MonoBehaviour{
 
-    public int MaxHealth = 100;
+    public static int MaxHealth = 100;
     public int CurrentHealth;
     private int fcount = 0;
     public static PlayerHealth Instance;
@@ -68,4 +68,8 @@ public class PlayerHealth: MonoBehaviour{
         Debug.Log("Returning int val of: " + val);
         return 100;
     } 
+    public static int getHealth()
+    {
+        return MaxHealth;
+    }
 }

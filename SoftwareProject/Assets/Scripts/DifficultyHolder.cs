@@ -11,7 +11,6 @@ public class DifficultyHolder : MonoBehaviour {
     void start()
     {
         GameObject PlayerHealth = GameObject.Find("Player Health");
-        //val = PlayerHealth
 
     }
     float health;

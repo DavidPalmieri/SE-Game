@@ -9,10 +9,18 @@ public class PlayerHealthManager : MonoBehaviour
     public int MaxHealth = 100;
     public int CurrentHealth;
     private int fcount = 0;
+    PlayerHealth phealth;
+
 
     // initiation of health
     private void Start()
     {
+        GameObject PlayerHealth = GameObject.Find("Player Health");
+        //PlayerHealth phealth;
+        //phealth = PlayerHealth.GetComponent<PlayerHealth>();
+
+        //CurrentHealth = phealth.getHealth();
+        applyDiff();
         CurrentHealth = MaxHealth;
     }
 
@@ -39,5 +47,9 @@ public class PlayerHealthManager : MonoBehaviour
         Debug.Log(CurrentHealth);
 
         gameObject.GetComponentInChildren<HealthBarController>().SetSize((float)CurrentHealth / (float)MaxHealth);
+    }
+    private void applyDiff()
+    {
+        MaxHealth = PlayerHealth.getHealth();
     }
 }
