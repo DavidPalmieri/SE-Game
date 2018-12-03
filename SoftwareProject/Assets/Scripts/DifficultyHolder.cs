@@ -13,12 +13,14 @@ public class DifficultyHolder : MonoBehaviour {
         GameObject PlayerHealth = GameObject.Find("Player Health");
 
     }
-    float health;
+
+    //Called once per frame
     void Update()
     {
         PlayerHealth.GetHealth(val);
         adjustValue(val);
     }
+    //Changes the value when the slider is moved.
     public void adjustValue(float value)
     {
         val = value;

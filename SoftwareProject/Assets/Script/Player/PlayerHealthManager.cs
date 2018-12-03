@@ -16,10 +16,6 @@ public class PlayerHealthManager : MonoBehaviour
     private void Start()
     {
         GameObject PlayerHealth = GameObject.Find("Player Health");
-        //PlayerHealth phealth;
-        //phealth = PlayerHealth.GetComponent<PlayerHealth>();
-
-        //CurrentHealth = phealth.getHealth();
         applyDiff();
         CurrentHealth = MaxHealth;
     }
@@ -48,6 +44,8 @@ public class PlayerHealthManager : MonoBehaviour
 
         gameObject.GetComponentInChildren<HealthBarController>().SetSize((float)CurrentHealth / (float)MaxHealth);
     }
+
+    //Applies the difficulty to MaxHeatlh
     private void applyDiff()
     {
         MaxHealth = PlayerHealth.getHealth();

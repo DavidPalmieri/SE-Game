@@ -11,17 +11,11 @@ public class PlayerHealth: MonoBehaviour{
     private int fcount = 0;
     public static PlayerHealth Instance;
     static int val;
-    //GameObject Difficulty= GameObject.Find("Difficulty");
-    //float value = Difficulty.GetComponent<DifficultyHolder>().val;
-
-
 
     // initiation of health
     private void Start()
     {
         Instance = this;
-        //GameObject Difficulty = GameObject.Find("Difficulty");
-        //MaxHealth = GetHealth(Difficulty.GetComponent<DifficultyHolder>().val);
         CurrentHealth = MaxHealth;
     }
 
@@ -40,17 +34,7 @@ public class PlayerHealth: MonoBehaviour{
             fcount++;
     }
 
-    //damage with the hit boxes
-    private void Hit(int d)
-    {
-        if (fcount > 5)
-        {
-            fcount = 0;
-            CurrentHealth -= d;
-        }
-            Debug.Log(CurrentHealth);
-        }
-        
+    //Gives health based on difficulty selected
     public static int GetHealth(float value)
     {
         Debug.Log("In and value is: " + value);
@@ -68,6 +52,7 @@ public class PlayerHealth: MonoBehaviour{
         Debug.Log("Returning int val of: " + val);
         return 100;
     } 
+    //Pulls maxHealth from a static instance
     public static int getHealth()
     {
         return MaxHealth;
