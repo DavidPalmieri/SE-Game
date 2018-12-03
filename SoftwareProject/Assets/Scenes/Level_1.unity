@@ -296,7 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a986d6b15efc84829adc9b089b07f903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
   CurrentHealth: 0
 --- !u!1 &12069545
 GameObject:
@@ -634,7 +633,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 110
   m_Sprite: {fileID: 21300000, guid: 4fc8b6ba8e0a7404d98d3edfffeecd8c, type: 3}
-  m_Color: {r: 0.9150943, g: 0.09064613, b: 0.09064613, a: 1}
+  m_Color: {r: 0.07681079, g: 0.5566038, b: 0.018378438, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
