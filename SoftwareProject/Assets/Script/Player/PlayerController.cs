@@ -171,15 +171,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             anim.SetBool("Jump", true);
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 10, rigidBody.velocity.z);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 5, rigidBody.velocity.z);
         }
 
-        if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y > 0)
+        else if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y > 0)
         {
             anim.SetBool("Jump", true);
             rigidBody.AddForce(Vector3.up * jumpForce);
         }
-
+        else{
+            anim.SetBool("Jump", false);
+        }
         // - Quit ------------------------------------------------------
 
         if (Input.GetKey(KeyCode.Escape))

@@ -22,7 +22,7 @@ public class PlayerHealth: MonoBehaviour{
     //update called once per frame
     private void Update()
     {
-        if(MaxHealth == 100 || MaxHealth == 75 || MaxHealth == 50){
+        if(MaxHealth == 100 || MaxHealth == 75 || MaxHealth == 30){
             MaxHealth = GetHealth((float)val);
             CurrentHealth = MaxHealth;
         }
@@ -46,7 +46,7 @@ public class PlayerHealth: MonoBehaviour{
         else if (value == 3)
         {
             Debug.Log("Value == 3");
-            return 50; 
+            return 30; 
         }
 
         Debug.Log("Returning int val of: " + val);
